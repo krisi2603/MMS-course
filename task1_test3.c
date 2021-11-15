@@ -110,7 +110,20 @@ double areaRects(node_t* list) {
 }
 
 void filterRects(node_t** list, double min, double max) {
-    
+    if(isRectListEmpty(*list)) {
+        printf("Nothing to delete\n");
+    }
+    node_t* current = *list;
+    node_t* temp = current;
+    while(current != NULL) {
+        temp = current;
+        double currentArea = area(temp->data);
+        if(currentArea >= min && currentArea <= max) {
+            current = current->next;
+            free(temp);  
+        }
+    }
+    *list = current;
 }
 
 int main(void) {
@@ -121,7 +134,8 @@ int main(void) {
         addNodeInRectList(&rects, rect);
     }
     printRectList(rects);
-    //double areaRects = areaRects(rects);
+    double area = areaRects(rects);
+    printf("Area of rectangles: %.2lf\n", area);
 
 
 
